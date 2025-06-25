@@ -58,4 +58,10 @@ app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+        error: err.message || "Something went wrong"
+    });
+});
 
