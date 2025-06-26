@@ -21,3 +21,5 @@ __pycache__/
 
 # Ignore compiled Java classes
 *.class
+
+echo .env >> .gitignore

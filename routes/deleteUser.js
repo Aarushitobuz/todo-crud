@@ -1,22 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
 
-module.exports = (users) => {
-    router.delete('/users/:id', (req, res,next) => {
-        try{
-            const userID = parseInt(req.params.id);
-            const index = users.findIndex(u => u.id === userID);
-
-            if (index === -1) {
-                return res.status(404).json({ message: "User not found" });
-            }
-
-            users.splice(index, 1);
-            return res.json({ message: "User deleted" });
-        }catch(err){
-            next(err);
+router.delete('/users/:id', async(req, res,next) => {
+    try{
+        const {id} = req.params;
+        const result = await User.findByIdAndDelete(id);
+        if(!result){
+            return res.status(404).json({message : "User not found"});
         }
-    });
-
-    return router;
-};
+    res.json({ message: "User deleted" });
+    }catch(err){
+        next(err);
+    }
+});
+module.exports = router;
