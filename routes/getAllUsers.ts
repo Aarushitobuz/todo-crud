@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { getAllUsers } from '../controllers/userController';
+import { getAllUsers } from '../controllers/user/getAllUsers';
 
 const router = express.Router();
 router.get('/all-users', (req: Request, res:Response, next:NextFunction) => {

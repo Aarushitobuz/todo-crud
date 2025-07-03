@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction }from 'express';
-import { deleteUser } from '../controllers/userController';
+import { deleteUser } from '../controllers/user/deleteUser';
 
 const router = express.Router();
 router.delete('/users/:id', (req: Request, res:Response ,next: NextFunction) => {
