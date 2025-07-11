@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { createUser } from '../controllers/user/postUser';
+import { createUser } from '../controllers/user/createUser';
 
 const router = express.Router();
 router.post('/users', (req: Request, res: Response, next: NextFunction) => {
