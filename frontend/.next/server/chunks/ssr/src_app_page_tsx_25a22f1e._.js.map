@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/itobuz/Desktop/aarush/task3/frontend/src/app/page.tsx"],"sourcesContent":["'use client';\n\nimport { useEffect } from 'react';\nimport { useRouter } from 'next/navigation';\n\nexport default function Home() {\n  const router = useRouter();\n\n  useEffect(() => {\n    const token = localStorage.getItem('token');\n    if (token) {\n      router.push('/todos');\n    } else {\n      router.push('/auth/login');\n    }\n  }, [router]);\n\n  return (\n    <main className=\"flex items-center justify-center min-h-screen\">\n      <h1 className=\"text-xl\">Redirecting...</h1>\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;AAEA;AACA;AAHA;;;;AAKe,SAAS;IACtB,MAAM,SAAS,CAAA,GAAA,kIAAA,CAAA,YAAS,AAAD;IAEvB,CAAA,GAAA,qMAAA,CAAA,YAAS,AAAD,EAAE;QACR,MAAM,QAAQ,aAAa,OAAO,CAAC;QACnC,IAAI,OAAO;YACT,OAAO,IAAI,CAAC;QACd,OAAO;YACL,OAAO,IAAI,CAAC;QACd;IACF,GAAG;QAAC;KAAO;IAEX,qBACE,8OAAC;QAAK,WAAU;kBACd,cAAA,8OAAC;YAAG,WAAU;sBAAU;;;;;;;;;;;AAG9B","debugId":null}}]
-}
