@@ -107,59 +107,7 @@ function TodoItem({ todo, onEdit, onDelete, onToggleComplete }) {
         lineNumber: 20,
         columnNumber: 9
     }, this);
-} // 'use client';
- // import { ITodo } from '@/lib/todo/types';
- // import { FaEdit, FaTrash } from 'react-icons/fa';
- // interface TodoItemProps {
- //   todo: ITodo;
- //   onEdit: (todo: ITodo) => void;
- //   onDelete: (id: string) => void;
- //   onToggleComplete: (id: string) => void;
- // }
- // export default function TodoItem({
- //   todo,
- //   onEdit,
- //   onDelete,
- //   onToggleComplete,
- // }: TodoItemProps) {
- //   return (
- //     <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md p-4 mb-4 shadow-sm flex flex-col sm:flex-row sm:items-start sm:justify-between">
- //       <div className="flex-1 overflow-hidden">
- //         <h3 className="font-semibold text-lg text-gray-900 dark:text-white break-words">
- //           {todo.title}
- //         </h3>
- //         <p className="text-gray-700 dark:text-gray-300 mt-1 whitespace-pre-line break-words">
- //           {todo.description}
- //         </p>
- //         <div className="flex items-center mt-2">
- //           <input
- //             type="checkbox"
- //             checked={todo.completed}
- //             onChange={() => onToggleComplete(todo._id)}
- //             className="mr-2"
- //           />
- //           <span className="text-sm text-gray-600 dark:text-gray-400">
- //             {todo.completed ? 'Completed' : 'Incomplete'}
- //           </span>
- //         </div>
- //       </div>
- //       <div className="flex items-center justify-end mt-4 sm:mt-0 sm:ml-4 gap-3 shrink-0">
- //         <button
- //           onClick={() => onEdit(todo)}
- //           className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
- //         >
- //           <FaEdit />
- //         </button>
- //         <button
- //           onClick={() => onDelete(todo._id)}
- //           className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
- //         >
- //           <FaTrash />
- //         </button>
- //       </div>
- //     </div>
- //   );
- // }
+}
 }}),
 "[project]/src/components/TodoList.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -202,41 +150,7 @@ function TodoList({ todos, onEdit, onDelete, onToggleComplete }) {
         lineNumber: 23,
         columnNumber: 9
     }, this);
-} // import TodoItem from './TodoItem';
- // import { ITodo } from '@/lib/todo/types';
- // interface TodoListProps {
- //   todos: ITodo[];
- //   onEdit: (todo: ITodo) => void;
- //   onDelete: (id: string) => void;
- //   onToggleComplete: (id: string) => void;
- // }
- // export default function TodoList({
- //   todos,
- //   onEdit,
- //   onDelete,
- //   onToggleComplete,
- // }: TodoListProps) {
- //   if (todos.length === 0) {
- //     return (
- //       <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
- //         No todos found.
- //       </p>
- //     );
- //   }
- //   return (
- //     <div className="mt-6 space-y-4">
- //       {todos.map((todo) => (
- //         <TodoItem
- //           key={todo._id}
- //           todo={todo}
- //           onEdit={onEdit}
- //           onDelete={onDelete}
- //           onToggleComplete={onToggleComplete}
- //         />
- //       ))}
- //     </div>
- //   );
- // }
+}
 }}),
 "[project]/src/components/TodoForm.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
@@ -292,53 +206,7 @@ function TodoForm({ title, description, onTitleChange, onDescriptionChange, onSu
         lineNumber: 22,
         columnNumber: 9
     }, this);
-} // 'use client';
- // import React from 'react';
- // interface TodoFormProps {
- //   title: string;
- //   description: string;
- //   setTitle: (title: string) => void;
- //   setDescription: (desc: string) => void;
- //   onSubmit: (e: React.FormEvent) => void;
- //   isEditing: boolean;
- // }
- // export default function TodoForm({
- //   title,
- //   description,
- //   setTitle,
- //   setDescription,
- //   onSubmit,
- //   isEditing,
- // }: TodoFormProps) {
- //   return (
- //     <form
- //       onSubmit={onSubmit}
- //       className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-md p-6 shadow-md space-y-4"
- //     >
- //       <input
- //         type="text"
- //         placeholder="Title"
- //         className="w-full px-4 py-2 border rounded-md bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
- //         value={title}
- //         onChange={(e) => setTitle(e.target.value)}
- //         required
- //       />
- //       <textarea
- //         placeholder="Description"
- //         className="w-full px-4 py-2 border rounded-md bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
- //         value={description}
- //         onChange={(e) => setDescription(e.target.value)}
- //         required
- //       />
- //       <button
- //         type="submit"
- //         className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400 transition duration-150"
- //       >
- //         {isEditing ? 'Update Todo' : 'Add Todo'}
- //       </button>
- //     </form>
- //   );
- // }
+}
 }}),
 "[externals]/util [external] (util, cjs)": (function(__turbopack_context__) {
 
