@@ -14,6 +14,7 @@ export default function TodosPage() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [editingTodo, setEditingTodo] = useState<ITodo | null>(null);
+    const [formErrors, setFormErrors] = useState<{ title?: string; description?: string }>({});
     const router = useRouter();
     const fetchTodos = useCallback(async () => {
         try {
@@ -27,8 +28,21 @@ export default function TodosPage() {
     useEffect(() => {
         fetchTodos();
     }, [fetchTodos]);
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const errors: typeof formErrors = {};
+        if (!title.trim()) {
+            errors.title = 'Title is required';
+        }
+        if (!description.trim()) {
+            errors.description = 'Description is required';
+        }
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+        setFormErrors({});
         try {
             if (editingTodo) {
                 await updateTodo(editingTodo._id, {
@@ -85,6 +99,7 @@ export default function TodosPage() {
                 onDescriptionChange={setDescription}
                 onSubmit={handleSubmit}
                 editing={!!editingTodo}
+                formErrors={formErrors}
             />
             <TodoList
                 todos={todos}

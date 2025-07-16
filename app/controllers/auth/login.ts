@@ -7,7 +7,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(401).json({ error: "Invalid User credentials" });
         }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {

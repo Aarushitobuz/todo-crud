@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Link from 'next/link'
 
 export default function RegisterPage() {
     const [name, setName] = useState('');
@@ -16,7 +17,6 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setErrorMsg('');
         setLoading(true);
         try {
             await api.post('/auth/register', { name, email, password });
@@ -82,10 +82,10 @@ export default function RegisterPage() {
                 </form>
                 <p className="text-center text-sm text-gray-600 dark:text-gray-300 mt-4">
                     Already have an account?{' '}
-                    <a href="/auth/login" className="text-blue-600 hover:underline">
+                    <Link href="/auth/login" className="text-blue-600 hover:underline">
                         Login
-                    </a>
-                </p>
+                    </Link>
+                </p> 
             </div>
         </main>
     );
