@@ -1,6 +1,30 @@
 {
   "version": 4,
   "routes": {
+    "/auth/register": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/auth/register",
+      "dataRoute": "/auth/register.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/favicon.ico": {
       "initialHeaders": {
         "cache-control": "public, max-age=0, must-revalidate",
@@ -101,37 +125,13 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
-    },
-    "/auth/register": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/auth/register",
-      "dataRoute": "/auth/register.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "508c8477e57bbaba81fb10df7c1ee052",
-    "previewModeSigningKey": "84b00149db8f6f70306b39bae28810ef664f998fe6902fc1f2349e5931bf5fe8",
-    "previewModeEncryptionKey": "71592c4607b67505d4aa02eb231db42e8339bf5b36ea77273cee9a2498193765"
+    "previewModeId": "c52737d74a34d7760d1c511ce810ee25",
+    "previewModeSigningKey": "d5803d538d47eeaaf9e1b29cc798d8f26a70da9cec7b835bd8299725c5ecaa68",
+    "previewModeEncryptionKey": "cb7c9fc282b536a4ce90d2d9acba0b8f5e337acbaa8e7e575a588a8aef08f1ef"
   }
 }
