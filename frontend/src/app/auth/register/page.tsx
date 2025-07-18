@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import Link from 'next/link'
+import Link from 'next/link';
 
 export default function RegisterPage() {
     const [name, setName] = useState('');

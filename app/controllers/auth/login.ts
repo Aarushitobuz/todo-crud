@@ -11,7 +11,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
         }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            return res.status(400).json({ error: "Invalid password" });
+            return res.status(401).json({ error: "Invalid password" });
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
             expiresIn: "7d",

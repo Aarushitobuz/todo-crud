@@ -1,11 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Sun, Moon, LogOut } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Sun, Moon, LogOut, User } from 'lucide-react';
 
 const Navbar = () => {
     const [darkMode, setDarkMode] = useState(false);
     const router = useRouter();
+    const Pathname = usePathname();
+    const hideProfileAndLogout = ['/auth/login', '/auth/register'].includes(Pathname);
     useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add('dark');
@@ -16,6 +18,9 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         router.push('/auth/login');
+    };
+    const goToProfile = () => {
+        router.push('/profile');
     };
     return (
         <nav className="flex items-center justify-between px-6 py-4 border-b bg-white dark:bg-gray-900 dark:text-white">
@@ -28,13 +33,24 @@ const Navbar = () => {
                 >
                     {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
-                <button
-                    onClick={handleLogout}
-                    className="p-2 rounded hover:bg-red-500 hover:text-white transition"
-                    aria-label="Logout"
-                >
-                    <LogOut size={18} />
-                </button>
+                {!hideProfileAndLogout && (
+                    <>
+                        <button
+                            onClick={goToProfile}
+                            className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                            aria-label="Profile"
+                        >
+                            <User size={18} />
+                        </button>
+                        <button
+                            onClick={handleLogout}
+                            className="p-2 rounded hover:bg-red-500 hover:text-white transition"
+                            aria-label="Logout"
+                        >
+                            <LogOut size={18} />
+                        </button>
+                    </>
+                )}
             </div>
         </nav>
     );

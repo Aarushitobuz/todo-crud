@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import Link from 'next/link';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -58,6 +59,11 @@ export default function LoginPage() {
                         >
                             {showPassword ? <FiEyeOff /> : <FiEye />}
                         </button>
+                        <p className="text-sm text-right mt-2">
+                            <Link href="/auth/forgot-password" className="text-blue-600 hover:underline">
+                                Forgot Password?
+                            </Link>
+                        </p>
                     </div>
                     <button
                         type="submit"
@@ -73,9 +79,9 @@ export default function LoginPage() {
                 </form>
                 <p className="text-center text-sm text-gray-600 dark:text-gray-300 mt-4">
                     Don&apos;t have an account?{' '}
-                    <a href="/auth/register" className="text-blue-600 hover:underline">
+                    <Link href="/auth/register" className="text-blue-600 hover:underline">
                         Register
-                    </a>
+                    </Link>
                 </p>
             </div>
         </main>
