@@ -7,7 +7,7 @@ export const getTodoById = async(req: AuthenticatedRequest, res: Response, next:
         const { id } = req.params;
         const userId = req.user?.userId;
         if(!userId) {
-            res.status(400).json({error: 'UserId is required'});
+            res.status(401).json({error: 'UserId is missing in the token'});
             return;
         }
         const todo  = await Todo.findOne({ _id: id, userId });

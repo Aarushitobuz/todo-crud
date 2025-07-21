@@ -7,7 +7,7 @@ export const deleteTodo = async (req: AuthenticatedRequest, res: Response, next:
         const id = req.params.id; 
         const userId = req.user?.userId;
         if(!userId) {
-            res.status(404).json({error: 'User not found'});
+            res.status(401).json({error: 'Unauthorizd: Userid is missing in the token'});
             return;
         }
         const deleted = await Todo.findByIdAndDelete({_id: id, userId});

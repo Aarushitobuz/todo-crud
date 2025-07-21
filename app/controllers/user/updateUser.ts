@@ -7,7 +7,7 @@ export const updateUser = async (req: AuthenticatedRequest, res: Response, next:
     try {
         const userId = req.user?.userId;
         if(!userId) {
-            return res.status(400).json({ error: 'userId is required' });   
+            return res.status(401).json({ error: 'Unauthorized: userId is missing in the token' });   
         };
         const { name, email } = req.body;
         const user = await User.findById(userId);
@@ -24,7 +24,7 @@ export const updateUser = async (req: AuthenticatedRequest, res: Response, next:
             user.email = email;
         }
         const updateUser = await user.save();
-        res.status(200).json(updateUser);
+        return res.status(200).json(updateUser);
     } catch (err) {
         next(err);
     }

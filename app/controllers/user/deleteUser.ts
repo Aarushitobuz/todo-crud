@@ -6,13 +6,13 @@ export const deleteUser = async (req: AuthenticatedRequest, res: Response, next:
     try {
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(400).json({ error: 'userId is required' });
+            return res.status(401).json({ error: 'Unauthorized: userId is missing in the token' });
         }
         const deletedUser = await User.findByIdAndDelete(userId);
         if (!deletedUser) {
             return res.status(404).json({ error: 'User not found' });
         }
-        res.json({ message: 'User successfully deleted' });
+        return res.status(200).json({ message: 'User successfully deleted' });
     } catch (err) {
         next(err);
     }

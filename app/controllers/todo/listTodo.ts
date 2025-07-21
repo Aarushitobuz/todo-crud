@@ -6,7 +6,7 @@ export const listTodo = async (req: AuthenticatedRequest, res: Response, next: N
     try {
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(400).json({ error: 'userId is required' });
+            return res.status(401).json({ error: 'userId is missing in the token' });
         }
         const todos = await Todo.find({ userId });
 

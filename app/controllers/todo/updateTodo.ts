@@ -9,7 +9,7 @@ export const updateTodo = async (req: AuthenticatedRequest, res: Response, next:
         const userId = req.user?.userId
         // const todo = await Todo.findById(id);
         if(!userId) {
-            res.status(404).json({error: 'User not found'});
+            res.status(401).json({error: 'Userid is missing in the token'});
             return;
         }
         const todo = await Todo.findOne({_id: id, userId});

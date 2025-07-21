@@ -7,7 +7,7 @@ export const createTodo = async (req: AuthenticatedRequest, res: Response, next:
         const {title, description} = req.body
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(400).json({ error: 'userId is required' });
+            return res.status(401).json({ error: 'userId is missing in token' });
         }
         const newTodo = new Todo({title, description, userId});
         const savedTodo = await newTodo.save();

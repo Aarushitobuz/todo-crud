@@ -1,112 +1,47 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import TodoList from '../../components/TodoList';
-import TodoForm from '../../components/TodoForm';
-import { ITodo } from '../../lib/todo/types';
 import { listTodo } from '../../lib/todo/listTodo';
-import { postTodo } from '../../lib/todo/postTodo';
-import { updateTodo } from '../../lib/todo/updateTodo';
-import { deleteTodo } from '../../lib/todo/deleteTodo';
+import { ITodo } from '../../lib/todo/types';
+import TodoForm from '../../components/TodoForm';
+import TodoList from '../../components/TodoList';
+import { AxiosError } from 'axios';
 
 export default function TodosPage() {
     const [todos, setTodos] = useState<ITodo[]>([]);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
     const [editingTodo, setEditingTodo] = useState<ITodo | null>(null);
-    const [formErrors, setFormErrors] = useState<{ title?: string; description?: string }>({});
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
     const fetchTodos = useCallback(async () => {
         try {
             const res = await listTodo();
             setTodos(res);
+            setError(null);
         } catch (err) {
-            console.error('Error fetching todos:', err);
-            router.push('/auth/login');
+            const axiosError = err as AxiosError;
+            console.error('Error fetching todos:', axiosError);
+            if (axiosError.response?.status === 401) {
+                router.push('/auth/login');
+            } else {
+                setError('Something went wrong while fetching the todos. Please try again');
+            }
         }
     }, [router]);
+
     useEffect(() => {
         fetchTodos();
     }, [fetchTodos]);
-    
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const errors: typeof formErrors = {};
-        if (!title.trim()) {
-            errors.title = 'Title is required';
-        }
-        if (!description.trim()) {
-            errors.description = 'Description is required';
-        }
-        if (Object.keys(errors).length > 0) {
-            setFormErrors(errors);
-            return;
-        }
-        setFormErrors({});
-        try {
-            if (editingTodo) {
-                await updateTodo(editingTodo._id, {
-                    title,
-                    description,
-                    completed: editingTodo.completed,
-                });
-                setEditingTodo(null);
-            } else {
-                await postTodo({ title, description });
-            }
-            setTitle('');
-            setDescription('');
-            fetchTodos();
-        } catch (err) {
-            console.error('Error saving todo:', err);
-        }
-    };
-    const handleEdit = (todo: ITodo) => {
-        setEditingTodo(todo);
-        setTitle(todo.title);
-        setDescription(todo.description);
-    };
-    const handleDelete = async (id: string) => {
-        const confirm = window.confirm('Are you sure you want to delete this todo?');
-        if (!confirm) return;
-        try {
-            await deleteTodo(id);
-            fetchTodos();
-        } catch (err) {
-            console.error('Error deleting todo:', err);
-        }
-    };
-    const handleToggleComplete = async (todo: ITodo) => {
-        try {
-            await updateTodo(todo._id, {
-                ...todo,
-                completed: !todo.completed,
-            });
-            fetchTodos();
-        } catch (err) {
-            console.error('Error toggling completion:', err);
-        }
-    };
+
     return (
         <main className="max-w-2xl mx-auto p-6">
-            <h1 className="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">
-                My Todos
-            </h1>
-            <TodoForm
-                title={title}
-                description={description}
-                onTitleChange={setTitle}
-                onDescriptionChange={setDescription}
-                onSubmit={handleSubmit}
-                editing={!!editingTodo}
-                formErrors={formErrors}
-            />
-            <TodoList
-                todos={todos}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onToggleComplete={handleToggleComplete}
-            />
+            <h1 className="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">My Todos</h1>
+            {error && (
+                <div className="mb-4 p-4 text-red-800 bg-red-100 border border-red-300 rounded-md">
+                    {error}
+                 </div>
+            )}
+            <TodoForm editingTodo={editingTodo} onSuccess={() => { fetchTodos(); setEditingTodo(null); }} />
+            <TodoList todos={todos} onEdit={setEditingTodo} onAction={fetchTodos} />
         </main>
     );
 }

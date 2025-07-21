@@ -6,8 +6,9 @@ import { Sun, Moon, LogOut, User } from 'lucide-react';
 const Navbar = () => {
     const [darkMode, setDarkMode] = useState(false);
     const router = useRouter();
-    const Pathname = usePathname();
-    const hideProfileAndLogout = ['/auth/login', '/auth/register'].includes(Pathname);
+    const pathname = usePathname();
+    const hideProfileAndLogout = ['/auth/login', '/auth/register'].includes(pathname);
+
     useEffect(() => {
         if (darkMode) {
             document.documentElement.classList.add('dark');
@@ -15,16 +16,28 @@ const Navbar = () => {
             document.documentElement.classList.remove('dark');
         }
     }, [darkMode]);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         router.push('/auth/login');
     };
+
     const goToProfile = () => {
         router.push('/profile');
     };
+
+    const goToTodos = () => {
+        router.push('/todos');
+    };
+
     return (
         <nav className="flex items-center justify-between px-6 py-4 border-b bg-white dark:bg-gray-900 dark:text-white">
-            <h1 className="text-lg font-semibold">My Todo App</h1>
+            <h1
+                onClick={goToTodos}
+                className="text-lg font-semibold cursor-pointer hover:text-blue-600 transition"
+            >
+                My Todo App
+            </h1>
             <div className="flex items-center gap-4">
                 <button
                     onClick={() => setDarkMode(!darkMode)}

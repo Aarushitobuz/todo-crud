@@ -1,9 +1,9 @@
 {
   "/_not-found/page": "/_not-found",
   "/favicon.ico/route": "/favicon.ico",
-  "/profile/page": "/profile",
   "/auth/register/page": "/auth/register",
-  "/page": "/",
+  "/todos/page": "/todos",
   "/auth/login/page": "/auth/login",
-  "/todos/page": "/todos"
+  "/page": "/",
+  "/profile/page": "/profile"
 }
