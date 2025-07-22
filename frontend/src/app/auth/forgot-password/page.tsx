@@ -1,36 +1,40 @@
 'use client';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { useState } from 'react';
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import Link from 'next/link';
 
+const schema = yup.object().shape({
+    email: yup.string().email('Invalid email address').required('Email is required'),
+});
+
+type FormData = yup.InferType<typeof schema>;
+
 export default function ForgotPasswordPage() {
-    const [email, setEmail] = useState('');
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<FormData>({
+        resolver: yupResolver(schema),
+    });
+
     const [message, setMessage] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const validateEmail = (email: string) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (data: FormData) => {
         setMessage('');
         setErrorMsg('');
-
-        if (!validateEmail(email)) {
-            setErrorMsg('Please enter a valid email address.');
-            return;
-        }
-
         setLoading(true);
 
         try {
-            const res = await api.post('/auth/forgot-password', { email });
+            const res = await api.post('/auth/forgot-password', data);
             setMessage(res.data.message);
-            setEmail('');
+            reset();
         } catch (err) {
             const error = err as AxiosError<{ error: string }>;
             setErrorMsg(error.response?.data?.error || 'Something went wrong');
@@ -45,17 +49,20 @@ export default function ForgotPasswordPage() {
                 <h2 className="text-2xl font-bold mb-6 text-center dark:text-white">Forgot Password</h2>
                 {message && <p className="text-green-600 text-sm mb-4">{message}</p>}
                 {errorMsg && <p className="text-red-500 text-sm mb-4">{errorMsg}</p>}
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        className={`w-full px-4 py-2 border rounded dark:bg-gray-800 dark:text-white ${
-                            errorMsg ? 'border-red-500' : ''
-                        }`}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className={`w-full px-4 py-2 border rounded dark:bg-gray-800 dark:text-white ${
+                                errors.email ? 'border-red-500' : ''
+                            }`}
+                            {...register('email')}
+                        />
+                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                    </div>
+
                     <button
                         type="submit"
                         className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition flex items-center justify-center"

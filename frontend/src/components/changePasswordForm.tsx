@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
-import { FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiLock, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -16,7 +17,7 @@ const schema = yup.object({
     confirmPassword: yup
         .string()
         .oneOf([yup.ref('newPassword')], 'Passwords do not match')
-        .required('Please confirm your new password'),
+        .required('Please confirm your new password')
 });
 
 type FormData = yup.InferType<typeof schema>;
@@ -86,7 +87,6 @@ export default function ChangePasswordForm() {
                     </div>
                     {errors.oldPassword && <p className="text-red-500 text-sm">{errors.oldPassword.message}</p>}
                 </div>
-
                 <div>
                     <label className="block text-sm font-medium mb-1 dark:text-gray-300">New Password</label>
                     <div className="relative">
@@ -105,7 +105,6 @@ export default function ChangePasswordForm() {
                     </div>
                     {errors.newPassword && <p className="text-red-500 text-sm">{errors.newPassword.message}</p>}
                 </div>
-
                 <div>
                     <label className="block text-sm font-medium mb-1 dark:text-gray-300">Confirm New Password</label>
                     <div className="relative">
@@ -122,9 +121,12 @@ export default function ChangePasswordForm() {
                             {showConfirm ? <FiEyeOff /> : <FiEye />}
                         </button>
                     </div>
-                    {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+                    {errors.confirmPassword && (
+                        <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+                    )}
                 </div>
 
+                {/* Submit Button */}
                 <button
                     type="submit"
                     disabled={loading}
@@ -133,6 +135,16 @@ export default function ChangePasswordForm() {
                     {loading ? 'Updating...' : 'Change Password'}
                 </button>
             </form>
+
+            <div className="mt-6 text-center">
+                <Link
+                    href="/profile"
+                    className="inline-flex items-center text-blue-600 hover:underline dark:text-blue-400"
+                >
+                    <FiArrowLeft className="mr-1" />
+                    Back to Profile
+                </Link>
+            </div>
         </div>
     );
 }

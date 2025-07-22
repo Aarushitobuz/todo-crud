@@ -1,26 +1,40 @@
 'use client';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+    newPassword: yup.string().min(6, 'Password must be at least 6 characters').required('New password is required'),
+    confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('newPassword')], 'Passwords do not match')
+    .required('Confirm password is required'),
+});
+
+type FormData = yup.InferType<typeof schema>;
 
 export default function ResetPasswordPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const token = searchParams.get('token');
-
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm<FormData>({
+        resolver: yupResolver(schema),
+    });
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const isPasswordValid = newPassword.length >= 6;
-    const doPasswordsMatch = newPassword === confirmPassword;
-    const isFormValid = token && isPasswordValid && doPasswordsMatch;
 
     useEffect(() => {
         if (!token) {
@@ -28,16 +42,20 @@ export default function ResetPasswordPage() {
         }
     }, [token]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!isFormValid) 
+    const onSubmit = async (data: FormData) => {
+        if (!token) 
             return;
         setErrorMsg('');
         setSuccessMsg('');
         setLoading(true);
+
         try {
-            const res = await api.post('/auth/reset-password', { token, newPassword });
+            const res = await api.post('/auth/reset-password', {
+                token,
+                newPassword: data.newPassword,
+            });
             setSuccessMsg(res.data.message);
+            reset();
             setTimeout(() => router.push('/auth/login'), 2500);
         } catch (err) {
             const error = err as AxiosError<{ error: string }>;
@@ -53,17 +71,16 @@ export default function ResetPasswordPage() {
                 <h2 className="text-2xl font-bold mb-6 text-center dark:text-white">Reset Password</h2>
                 {errorMsg && <p className="text-red-500 mb-4 text-sm">{errorMsg}</p>}
                 {successMsg && <p className="text-green-600 mb-4 text-sm">{successMsg}</p>}
-                <form onSubmit={handleSubmit} className="space-y-4">
+
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="relative">
                         <input
                             type={showNewPassword ? 'text' : 'password'}
                             placeholder="New Password"
                             className={`w-full px-4 py-2 border rounded pr-10 dark:bg-gray-800 dark:text-white ${
-                                newPassword && !isPasswordValid ? 'border-red-500' : ''
+                                errors.newPassword ? 'border-red-500' : ''
                             }`}
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            required
+                            {...register('newPassword')}
                         />
                         <button
                             type="button"
@@ -73,20 +90,19 @@ export default function ResetPasswordPage() {
                         >
                             {showNewPassword ? <FiEyeOff /> : <FiEye />}
                         </button>
+                        {errors.newPassword && (
+                            <p className="text-red-500 text-sm mt-1">{errors.newPassword.message}</p>
+                        )}
                     </div>
-                    {!isPasswordValid && newPassword && (
-                        <p className="text-red-500 text-sm -mt-2">Password must be at least 6 characters</p>
-                    )}
+
                     <div className="relative">
                         <input
                             type={showConfirmPassword ? 'text' : 'password'}
                             placeholder="Confirm Password"
                             className={`w-full px-4 py-2 border rounded pr-10 dark:bg-gray-800 dark:text-white ${
-                                confirmPassword && !doPasswordsMatch ? 'border-red-500' : ''
+                                errors.confirmPassword ? 'border-red-500' : ''
                             }`}
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
+                            {...register('confirmPassword')}
                         />
                         <button
                             type="button"
@@ -96,15 +112,16 @@ export default function ResetPasswordPage() {
                         >
                             {showConfirmPassword ? <FiEyeOff /> : <FiEye />}
                         </button>
+                        {errors.confirmPassword && (
+                            <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
+                        )}
                     </div>
-                    {!doPasswordsMatch && confirmPassword && (
-                        <p className="text-red-500 text-sm -mt-2">Passwords do not match</p>
-                    )}
+
                     <button
                         type="submit"
-                        disabled={!isFormValid || loading}
+                        disabled={!token || loading}
                         className={`w-full py-2 rounded flex items-center justify-center transition ${
-                            isFormValid
+                            token
                                 ? 'bg-blue-600 text-white hover:bg-blue-700'
                                 : 'bg-gray-400 text-white cursor-not-allowed'
                         }`}

@@ -13,7 +13,16 @@
     }
   ],
   "headers": [],
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/todos/edit/[id]",
+      "regex": "^/todos/edit/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/todos/edit/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -28,6 +37,12 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/auth/forgot-password",
+      "regex": "^/auth/forgot\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/forgot\\-password(?:/)?$"
+    },
+    {
       "page": "/auth/login",
       "regex": "^/auth/login(?:/)?$",
       "routeKeys": {},
@@ -38,6 +53,18 @@
       "regex": "^/auth/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/auth/register(?:/)?$"
+    },
+    {
+      "page": "/auth/reset-password",
+      "regex": "^/auth/reset\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/reset\\-password(?:/)?$"
+    },
+    {
+      "page": "/change-password",
+      "regex": "^/change\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/change\\-password(?:/)?$"
     },
     {
       "page": "/favicon.ico",
@@ -56,6 +83,12 @@
       "regex": "^/todos(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/todos(?:/)?$"
+    },
+    {
+      "page": "/todos/new",
+      "regex": "^/todos/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/todos/new(?:/)?$"
     }
   ],
   "dataRoutes": [],

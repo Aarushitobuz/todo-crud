@@ -2,12 +2,14 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import path from 'path';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 import authRegisterRoutes from './routes/authRegister';
 import authLoginRoutes from './routes/authLogin';
@@ -23,18 +25,19 @@ import getAllUsersRoute from './routes/getAllUsers';
 import updateUserRoute from './routes/updateUser';
 import deleteUserRoute from './routes/deleteUser';
 import changePasswordRoute from './routes/changePassword';
+import uploadProfilePictureRoute from './routes/uploadProfilePicture';
 app.use('/user', postUserRoute);
 app.use('/user', getAllUsersRoute);
 app.use('/user', updateUserRoute);
 app.use('/user', deleteUserRoute);
 app.use('/user', changePasswordRoute);
+app.use('/user', uploadProfilePictureRoute);
 
 import postTodoRoute from './routes/postTodo';
 import listTodoRoute from './routes/listTodo';
 import getTodoByIdRoute from './routes/getTodoById';
 import updateTodoRoute from './routes/updateTodo';
 import deleteTodoRoute from './routes/deleteTodo';
-import { changePassword } from "./controllers/user/changePassword";
 app.use('/todo', postTodoRoute);
 app.use('/todo', listTodoRoute);
 app.use('/todo', getTodoByIdRoute);

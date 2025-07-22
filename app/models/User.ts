@@ -7,6 +7,7 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  profilePhoto?: string;
   resetToken?: string;
   resetTokenExpiry?: number;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -24,6 +25,7 @@ const userSchema: Schema<IUser> = new Schema(
       match: [/^\S+@\S+\.\S+$/, 'Please use a valid email address']
     },
     password: { type: String, required: true, minlength: 6 },
+    profilePhoto: { type: String },
     resetToken: { type: String },          
     resetTokenExpiry: { type: Number }        
   },

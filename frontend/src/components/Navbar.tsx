@@ -7,7 +7,6 @@ const Navbar = () => {
     const [darkMode, setDarkMode] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
-    const hideProfileAndLogout = ['/auth/login', '/auth/register'].includes(pathname);
 
     useEffect(() => {
         if (darkMode) {
@@ -16,19 +15,22 @@ const Navbar = () => {
             document.documentElement.classList.remove('dark');
         }
     }, [darkMode]);
-
+    
     const handleLogout = () => {
         localStorage.removeItem('token');
         router.push('/auth/login');
     };
-
-    const goToProfile = () => {
-        router.push('/profile');
-    };
-
-    const goToTodos = () => {
-        router.push('/todos');
-    };
+    const goToProfile = () => router.push('/profile');
+    const goToTodos = () => router.push('/todos');
+    const hideNavbarRoutes = [
+        '/auth/login',
+        '/auth/register',
+        '/auth/forgot-password',
+        '/auth/reset-password',
+    ];
+    const hideNavbar = hideNavbarRoutes.includes(pathname);
+    if (hideNavbar) 
+        return null;
 
     return (
         <nav className="flex items-center justify-between px-6 py-4 border-b bg-white dark:bg-gray-900 dark:text-white">
@@ -46,24 +48,20 @@ const Navbar = () => {
                 >
                     {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
-                {!hideProfileAndLogout && (
-                    <>
-                        <button
-                            onClick={goToProfile}
-                            className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-                            aria-label="Profile"
-                        >
-                            <User size={18} />
-                        </button>
-                        <button
-                            onClick={handleLogout}
-                            className="p-2 rounded hover:bg-red-500 hover:text-white transition"
-                            aria-label="Logout"
-                        >
-                            <LogOut size={18} />
-                        </button>
-                    </>
-                )}
+                <button
+                    onClick={goToProfile}
+                    className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                    aria-label="Profile"
+                >
+                    <User size={18} />
+                </button>
+                <button
+                    onClick={handleLogout}
+                    className="p-2 rounded hover:bg-red-500 hover:text-white transition"
+                    aria-label="Logout"
+                >
+                    <LogOut size={18} />
+                </button>
             </div>
         </nav>
     );
