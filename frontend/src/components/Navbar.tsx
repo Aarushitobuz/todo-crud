@@ -1,12 +1,18 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Sun, Moon, LogOut, User } from 'lucide-react';
 
 const Navbar = () => {
     const [darkMode, setDarkMode] = useState(false);
+    const [tokenExists, setTokenExists] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setTokenExists(!!token);
+    }, [pathname]);
 
     useEffect(() => {
         if (darkMode) {
@@ -15,28 +21,23 @@ const Navbar = () => {
             document.documentElement.classList.remove('dark');
         }
     }, [darkMode]);
-    
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         router.push('/auth/login');
     };
+
     const goToProfile = () => router.push('/profile');
     const goToTodos = () => router.push('/todos');
-    const hideNavbarRoutes = [
-        '/auth/login',
-        '/auth/register',
-        '/auth/forgot-password',
-        '/auth/reset-password',
-    ];
-    const hideNavbar = hideNavbarRoutes.includes(pathname);
-    if (hideNavbar) 
+
+    if (!tokenExists) 
         return null;
 
     return (
-        <nav className="flex items-center justify-between px-6 py-4 border-b bg-white dark:bg-gray-900 dark:text-white">
+        <nav className="flex items-center justify-between px-6 py-4 border-b bg-white dark:bg-gray-900 dark:text-white shadow">
             <h1
                 onClick={goToTodos}
-                className="text-lg font-semibold cursor-pointer hover:text-blue-600 transition"
+                className="text-lg font-semibold cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition"
             >
                 My Todo App
             </h1>

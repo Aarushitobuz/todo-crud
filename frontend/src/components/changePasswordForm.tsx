@@ -125,8 +125,6 @@ export default function ChangePasswordForm() {
                         <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
                     )}
                 </div>
-
-                {/* Submit Button */}
                 <button
                     type="submit"
                     disabled={loading}

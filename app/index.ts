@@ -25,13 +25,13 @@ import getAllUsersRoute from './routes/getAllUsers';
 import updateUserRoute from './routes/updateUser';
 import deleteUserRoute from './routes/deleteUser';
 import changePasswordRoute from './routes/changePassword';
-import uploadProfilePictureRoute from './routes/uploadProfilePicture';
+import uploadProfilePhotoRoute from './routes/uploadProfilePhoto';
 app.use('/user', postUserRoute);
 app.use('/user', getAllUsersRoute);
 app.use('/user', updateUserRoute);
 app.use('/user', deleteUserRoute);
 app.use('/user', changePasswordRoute);
-app.use('/user', uploadProfilePictureRoute);
+app.use('/user', uploadProfilePhotoRoute);
 
 import postTodoRoute from './routes/postTodo';
 import listTodoRoute from './routes/listTodo';

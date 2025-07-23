@@ -50,10 +50,15 @@ export default function ResetPasswordPage() {
         setLoading(true);
 
         try {
-            const res = await api.post('/auth/reset-password', {
-                token,
-                newPassword: data.newPassword,
-            });
+            const res = await api.post(
+                '/auth/reset-password',
+                { newPassword: data.newPassword },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             setSuccessMsg(res.data.message);
             reset();
             setTimeout(() => router.push('/auth/login'), 2500);
