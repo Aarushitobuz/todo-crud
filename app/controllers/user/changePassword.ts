@@ -7,7 +7,7 @@ export const changePassword = async( req: AuthenticatedRequest, res: Response, n
         const userId = req.user?.userId;
         const { oldPassword, newPassword } = req.body;
         if(!userId) {
-            return res.status(401).json({message: 'unauthorized'});
+            return res.status(401).json({message: 'unauthorized request'});
         }
         const user = await User.findById(userId);
         if(!user) {
@@ -15,7 +15,7 @@ export const changePassword = async( req: AuthenticatedRequest, res: Response, n
         }
         const isMatch = await user.comparePassword(oldPassword);
         if (!isMatch) {
-            return res.status(400).json({message: 'Incorrect old password'});
+            return res.status(400).json({message: 'Incorrect  password'});
         }
         user.password = newPassword;
         await user.save();

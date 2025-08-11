@@ -67,6 +67,7 @@ export default function ProfilePage() {
                         </div>
                     )}
                 </div>
+                
 
                 <div className="text-center mb-6">
                     <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{user.name}</h2>

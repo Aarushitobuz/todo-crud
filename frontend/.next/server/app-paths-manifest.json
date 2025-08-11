@@ -1,9 +1,7 @@
 {
-  "/auth/forgot-password/page": "app/auth/forgot-password/page.js",
-  "/auth/login/page": "app/auth/login/page.js",
-  "/auth/register/page": "app/auth/register/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/profile/page": "app/profile/page.js",
+  "/todos/edit/[id]/page": "app/todos/edit/[id]/page.js",
   "/todos/new/page": "app/todos/new/page.js",
   "/todos/page": "app/todos/page.js"
 }

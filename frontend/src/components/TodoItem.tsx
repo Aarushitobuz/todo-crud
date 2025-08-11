@@ -16,6 +16,7 @@ export default function TodoItem({ todo, onEdit, onAction }: Props) {
         try {
             await updateTodo(todo._id, { ...todo, completed: !todo.completed });
             onAction();
+            console.log('Todo updated successfully');
         } catch (err) {
             console.error('Error toggling complete:', err);
         }

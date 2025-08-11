@@ -107,6 +107,7 @@ function TodoItem({ todo, onEdit, onAction }) {
                 completed: !todo.completed
             });
             onAction();
+            console.log('Todo updated successfully');
         } catch (err) {
             console.error('Error toggling complete:', err);
         }
@@ -134,7 +135,7 @@ function TodoItem({ todo, onEdit, onAction }) {
                         className: "mt-1 accent-blue-600"
                     }, void 0, false, {
                         fileName: "[project]/src/components/TodoItem.tsx",
-                        lineNumber: 38,
+                        lineNumber: 39,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -144,7 +145,7 @@ function TodoItem({ todo, onEdit, onAction }) {
                                 children: todo.title
                             }, void 0, false, {
                                 fileName: "[project]/src/components/TodoItem.tsx",
-                                lineNumber: 45,
+                                lineNumber: 46,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -152,19 +153,19 @@ function TodoItem({ todo, onEdit, onAction }) {
                                 children: todo.description
                             }, void 0, false, {
                                 fileName: "[project]/src/components/TodoItem.tsx",
-                                lineNumber: 48,
+                                lineNumber: 49,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/TodoItem.tsx",
-                        lineNumber: 44,
+                        lineNumber: 45,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/TodoItem.tsx",
-                lineNumber: 37,
+                lineNumber: 38,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -178,12 +179,12 @@ function TodoItem({ todo, onEdit, onAction }) {
                             size: 18
                         }, void 0, false, {
                             fileName: "[project]/src/components/TodoItem.tsx",
-                            lineNumber: 55,
+                            lineNumber: 56,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/TodoItem.tsx",
-                        lineNumber: 54,
+                        lineNumber: 55,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -194,24 +195,24 @@ function TodoItem({ todo, onEdit, onAction }) {
                             size: 18
                         }, void 0, false, {
                             fileName: "[project]/src/components/TodoItem.tsx",
-                            lineNumber: 58,
+                            lineNumber: 59,
                             columnNumber: 21
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/TodoItem.tsx",
-                        lineNumber: 57,
+                        lineNumber: 58,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/TodoItem.tsx",
-                lineNumber: 53,
+                lineNumber: 54,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/TodoItem.tsx",
-        lineNumber: 36,
+        lineNumber: 37,
         columnNumber: 9
     }, this);
 }
